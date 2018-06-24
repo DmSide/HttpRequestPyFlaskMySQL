@@ -1,0 +1,55 @@
+DROP USER ‘newuser’@‘localhost’;
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+FLUSH PRIVILEGES;
+
+DROP DATABASE IF EXISTS bookauthor;
+CREATE DATABASE bookauthor;
+
+USE bookauthor;
+
+drop table if exists book_author;
+drop table if exists author;
+drop table if exists book;
+
+create table book(
+  id integer auto_increment,
+  title CHAR(30) not null,
+  year integer not null,
+  PRIMARY KEY (id)
+) CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+
+create table author(
+  id integer auto_increment,
+  name CHAR(30) not null,
+  PRIMARY KEY (id)
+) CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+
+create table book_author(
+  id_book integer not null,
+  id_author integer not null,
+  FOREIGN KEY (id_book)
+    REFERENCES book(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (id_author)
+    REFERENCES author(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+INSERT INTO book(title,year) VALUES("Silent Hill",1984);
+INSERT INTO author(name) VALUES("Kryzen A.B.");
+INSERT INTO book_author(id_book,id_author) VALUES(1,1); 
+
+INSERT INTO book(title,year) VALUES("Marry Sue",1999);
+
+INSERT INTO author(name) VALUES("Brown C.D.");
+INSERT INTO author(name) VALUES("White E.F.");
+INSERT INTO author(name) VALUES("Green A.F.");
+
+INSERT INTO book_author(id_book,id_author) VALUES(2,2); 
+INSERT INTO book_author(id_book,id_author) VALUES(2,3); 
+INSERT INTO book_author(id_book,id_author) VALUES(2,4); 
+
+select title,year,author.name from book_author ba,book,author

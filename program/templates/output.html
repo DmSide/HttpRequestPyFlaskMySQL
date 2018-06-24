@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Output</title>
+</head>
+<body>
+    <h1>Books</h1>
+    <hr>
+    <table border="1">
+        {% for result in resultsBook %}
+         <tr>   <td> {{ result["id"] }} </td> <td> {{ result["title"] }}</td> <td>{{ result["year"] }} </td> </tr>
+        {% endfor %}
+    </table>
+    <h1>Authors</h1>
+    <hr>
+    <table border="1">
+        {% for result in resultsAuthor %}
+         <tr>   <td> {{ result["id"] }} </td> <td> {{ result["name"] }}</td> </tr>
+        {% endfor %}
+    </table>
+    <h1>BookAuthors</h1>
+    <hr>
+    <table border="1">
+        {% for result in resultsBookAuthor %}
+         <tr>   <td> {{ result["title"] }} </td> <td> {{ result["year"] }}</td>  <td>{{ result["name"] }} </td> </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

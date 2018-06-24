@@ -1,0 +1,97 @@
+--------------------------------------------------------
+#Повторить запрос 2 раза. Проверка на то, что книга не будет добавлена повторно
+import requests
+data = { "title": "Дэвид Копперфильд", "year": 1850, "authors": ["Чарльз Диккенс","Эдгард По"] }
+print(data)
+url = 'http://127.0.0.1:5000'
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain', 'Content-Encoding': 'utf-8'}
+#r=requests.post(url, data=data, headers=headers)
+r=requests.post(url,json=data);
+print(r)
+
+--------------------------------------------------------
+#Проверить, что автор не будет добавлен повторно
+import requests
+data = { "title": "Дэвид Копперфильд 2", "year": 1850, "authors": ["Чарльз Диккенс","Эдгард По 2"] }
+print(data)
+url = 'http://127.0.0.1:5000'
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain', 'Content-Encoding': 'utf-8'}
+#r=requests.post(url, data=data, headers=headers)
+r=requests.post(url,json=data);
+print(r)
+--------------------------------------------------------
+#Проверить DELETE из таблицы авторов и удаление из таблицы связи  //"Эдгард По 2"
+# insert into author(name) values ("Deleted");
+# select * from author;
+import requests 
+data = { "action": "delete", "table": "author", "cur_id": 7 } 
+print(data)
+url = 'http://127.0.0.1:5000/actions'
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain', 'Content-Encoding': 'utf-8'}
+#r=requests.post(url, data=data, headers=headers)
+r=requests.post(url,json=data);
+print(r)
+--------------------------------------------------------
+#Проверить DELETE из таблицы книг и удаление из таблицы связи  //"Deleted"
+# insert into book(title,year) values ("Deleted",2000);
+# insert into book_author(id_book,id_author) values (5,5); 
+# select * from book;
+# select * from book_author;
+import requests 
+data = { "action": "delete", "table": "book", "cur_id": 4 } 
+print(data)
+url = 'http://127.0.0.1:5000/actions'
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain', 'Content-Encoding': 'utf-8'}
+#r=requests.post(url, data=data, headers=headers)
+r=requests.post(url,json=data);
+print(r)
+--------------------------------------------------------
+#Проверить DELETE из таблицы связи  //
+# insert into book(title,year) values ("Deleted",2000);
+# insert into book_author(id_book,id_author) values (1,4); 
+# select * from book;
+# select * from book_author;
+import requests 
+data = { "action": "delete", "table": "book_author", "cur_id_book": 2, "cur_id_author": 3} 
+print(data)
+url = 'http://127.0.0.1:5000/actions'
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain', 'Content-Encoding': 'utf-8'}
+#r=requests.post(url, data=data, headers=headers)
+r=requests.post(url,json=data);
+print(r)
+--------------------------------------------------------
+#Проверить UPDATE из таблицы книг //
+# select * from book;
+# select * from book_author;
+import requests 
+data = { "action": "update", "table": "book", "cur_id": 3, "title": "Updated book", "year":2000 } 
+print(data)
+url = 'http://127.0.0.1:5000/actions'
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain', 'Content-Encoding': 'utf-8'}
+#r=requests.post(url, data=data, headers=headers)
+r=requests.post(url,json=data);
+print(r)
+--------------------------------------------------------
+#Проверить UPDATE из таблицы авторов 
+# select * from author;
+# select * from book_author;
+import requests 
+data = { "action": "update", "table": "author", "cur_id": 2, "name": "Updated Author" } 
+print(data)
+url = 'http://127.0.0.1:5000/actions'
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain', 'Content-Encoding': 'utf-8'}
+#r=requests.post(url, data=data, headers=headers)
+r=requests.post(url,json=data);
+print(r)
+--------------------------------------------------------
+#Проверить UPDATE из таблицы связи
+# select * from author;
+# select * from book_author;
+import requests 
+data = { "action": "update", "table": "book_author", "id_book": 1,"id_author":4, "cur_id_book":1,"cur_id_author":1 } 
+print(data)
+url = 'http://127.0.0.1:5000/actions'
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain', 'Content-Encoding': 'utf-8'}
+#r=requests.post(url, data=data, headers=headers)
+r=requests.post(url,json=data);
+print(r)
